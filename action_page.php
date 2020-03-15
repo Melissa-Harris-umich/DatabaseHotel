@@ -8,16 +8,12 @@ if($con === false){
     die("ERROR: Could not connect. " . mysql_connect_error());
 }
 
-// $GuestId = mysqli_real_escape_string($con, $db['GuestId']);
-// $GFname = mysqli_real_escape_string($con, $db['GFname']);
-// $GLname = mysqli_real_escape_string($con, $db['GLname']);
-// $GAddress = mysqli_real_escape_string($con, $db['GAddress']);
-// $GCity = mysqli_real_escape_string($con, $db['GCity']);
+
 
 mysql_select_db('test', $con);
 //Insert into Guest table
-$sql = "INSERT INTO GUEST (GuestId, GFname, GLname, GAddress,GCity) values 
-('$_POST[GuestId]', '$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
+$sql = "INSERT INTO GUEST (GFname, GLname, GAddress,GCity) values 
+('$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
 
 if(mysql_query($sql,$con )){
     echo "Records added successfully.";
@@ -28,3 +24,5 @@ if(mysql_query($sql,$con )){
 // Close connection
 mysql_close($con);
 ?>
+<br>
+<a href="http://localhost/Github/DatabaseHotel/"><button>Click here to go back</button></a>

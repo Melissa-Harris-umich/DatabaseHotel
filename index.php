@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Connecting to a Database</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
 </head>
 <body>
  <?php
@@ -11,105 +11,82 @@
    $db = mysql_select_db('test');
    if($con) //Verify  connection to database
    {
-    echo "Successfully connected to the database";
+    //echo "Successfully connected to the database";
   }
   else {
     die("Error");
   }
 
-  if($db){ //Verify that database is found
-    echo 'Successfully found the database';
-  }else{
-    die('Error.Database not found');
-  }
+
 ?>
 <br />
-<br />
 
-<!---Input form here adds to Guest table---->
-<form action="/action_page.php" method="post"> 
+<h1>Hotel Database</h1>
 
-  <label for="ID">ID:</label>
-  <input type="text" id="ID" name="GuestId"><br><br>
 
+<!---Input form here HTML ---->
+<form action="/github/databasehotel/action_page.php" method="post" id="guestInfo"> 
+  <!---Name of table column goes in the name= field-->
+
+  <div>
   <label for="Fname">First name:</label>
   <input type="text" id="Fname" name="GFname"><br><br>
   <label for="Lname">Last name:</label>
   <input type="text" id="Lname" name="GLname"><br><br>
-  <label for="Address">Address:</label>
-  <input type="text" id="Address" name="GAddress"><br><br>
-  <label for="City">City:</label>
-  <input type="text" id="City" name="GCity"><br><br>
-
-  <input type="submit" value="Submit" onclick="addRow('Guest_Table')">
+  <label for="address">Address:</label>
+  <input type="text" id="address" name="GAddress"><br><br>
+  <label for="city">City:</label>
+  <input type="text" id="city" name="GCity"><br><br>
+  <input type="submit" value="Submit" >
+</div>
 </form>
+
+
+
+
 
 <?php
 //Get table data
-$query = mysql_query("SELECT * FROM test ");//Dispaly info within Database
-
-  while($row = mysql_fetch_array($query)){
-    $id = $row['ID#'];
-    $fname = $row['Fname'];
-	$lname = $row['Lname'];
-
-
-		
-     }
-
-     ?>
+$query = "SELECT * FROM guest ";//Display info within Database
+$result =mysql_query($query);
+?>
 <!-----shows guest table----------->
-<table id="Guest_Table">
+<table  style="width:600px; line-height:40px;" id="Guest_Table">
 
 <tr>
+ <th colspan="5"><h3>Guest Table</h3></th>
+</tr>
 <th> ID</th>
 <th>First Name</th>
 <th>Last Name</th>
+<th>Address</th>
+<th>City</th>
 </tr>
-<tr>
+
 <?php
     
-   
- echo"<td>$id</td>";
- echo"<td>$fname</td>";
- echo"<td>$lname</td>";
- echo"<td>$address</td>";
- echo"<td>$city</td>";
+ //Table data taken from assigned variables, displays guest data in Front-end table  
+ while($row = mysql_fetch_assoc($result))
+ {
+
+ ?>
+ <tr>
+ <td><?php echo  $row['GuestID']; ?></td>
+ <td><?php echo  $row['GFname']; ?></td>
+ <td><?php echo  $row['GLname']; ?></td>
+ <td><?php echo  $row['GAddress']; ?></td>
+ <td><?php echo  $row['GCity']; ?></td>
  
+ </tr>
+
+ <?php
+ }
      ?>
 
-  </tr>
-   <tr>
-     <td>Eve</td>
-     <td>Jackson</td>
-     <td>94</td>
-   </tr> 
+
  </table>
 
- <!-------Dynamically adds new row to Guest table NOT WORKING/FINISHED YET---------->
-    <script language="javascript"> 
-
-    function addRow(Guest_Table) {
-
-      
-			var table = document.getElementById(tableID);
-      var index = $("table tbody tr:last-child").index();
-    var row = '<tr>' +          
-                '<td><input type="text" name="GuestId" ></td>' +
-                '<td><input type="text" name="GLname" ></td>' +
-                '<td><input type="text" name="GFname" ></td>' +
-                '<td><input type="text" name="GAddress" ></td>' +
-    '</tr>';
-    $("Guest_Table").append(row);  
-
-
-
-
-}
-
-    }
   
-  </script>
 
 </body>
 </html>
