@@ -10,7 +10,7 @@ if($con === false){
 
 
 
-mysql_select_db('test', $con);
+mysql_select_db('421 database', $con);
 //Insert into Guest table
 $sql = "INSERT INTO GUEST (GFname, GLname, GAddress,GCity) values 
 ('$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
@@ -25,4 +25,4 @@ if(mysql_query($sql,$con )){
 mysql_close($con);
 ?>
 <br>
-<a href="http://localhost/Github/DatabaseHotel/"><button>Click here to go back</button></a>
+<a href="http://localhost/Github/DatabaseHotel/login.php"><button>Click here to go back</button></a>
