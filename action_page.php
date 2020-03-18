@@ -8,7 +8,8 @@ if($con === false){
     die("ERROR: Could not connect. " . mysql_connect_error());
 }
 
-
+//If adding record to guest
+if (isset($_POST['action'])) {
 
 mysql_select_db('421 database', $con);
 //Insert into Guest table
@@ -21,6 +22,8 @@ if(mysql_query($sql,$con )){
     echo "ERROR: Could not able to execute $sql. " . mysql_error($con);
 }
  
+
+}
 // Close connection
 mysql_close($con);
 ?>

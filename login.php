@@ -25,7 +25,7 @@
 
 
 <!---Input form here HTML ---->
-<form action="/github/databasehotel/action_page.php" method="post" id="guestInfo"> 
+<form action="/github/databasehotel/action_page.php" method="post" name="action" value="updateG"> 
   <!---Name of table column goes in the name= field-->
 
   <div>
