@@ -1,14 +1,14 @@
 <!Doctype html>
 <html>
 <head>
-    <title>Connecting to a Database</title>
+    <title>Guest Table</title>
     <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
 </head>
 <body>
  <?php
    $con = mysql_connect('localhost', 'root','usbw'); /*Function used
    to connect to database*/
-   $db = mysql_select_db('421 database');
+   $db = mysql_select_db('test');
    if($con) //Verify  connection to database
    {
     //echo "Successfully connected to the database";
@@ -29,13 +29,13 @@
   <!---Name of table column goes in the name= field-->
 
   <div>
-  <label for="Fname">First name:</label>
+  <label>First name:</label>
   <input type="text" id="Fname" name="GFname"><br><br>
-  <label for="Lname">Last name:</label>
+  <label>Last name:</label>
   <input type="text" id="Lname" name="GLname"><br><br>
-  <label for="address">Address:</label>
+  <label>Address:</label>
   <input type="text" id="address" name="GAddress"><br><br>
-  <label for="city">City:</label>
+  <label>City:</label>
   <input type="text" id="city" name="GCity"><br><br>
   <input type="submit" value="Submit" >
 </div>

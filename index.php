@@ -25,37 +25,14 @@
             <link rel="stylesheet" href="assets/css/responsive.css">
    </head>
 
-   <body>
+   
     <!-----PHP CONNECTING---->
-   <?php
-   $con = mysql_connect('localhost', 'root','usbw'); /*Function used
-   to connect to database*/
-   $db = mysql_select_db('421 database');
-   if($con) //Verify  connection to database
-   {
-    //echo "Successfully connected to the database";
-  }
-  else {
-    die("Error");
-  }
 
 
-?>
+<body>
 <br />
 
        
-    <!-- Preloader Start add to database load
-    <div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <strong>Hotel</b>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- Preloader Start -->
 
     <header>
         <!-- Header Start -->
@@ -76,8 +53,8 @@
                                     <ul id="navigation">                                                                                                                                     
                                         <li><a href="index.html">Home</a></li>
                                         <li><a href="about.html">About Us</a></li>
-                                        <li><a href="login.php">Sign Up</a></li>
-                                       <li><a href="contact.html">Login</a></li>
+                                        <li><a href="databaseTableTest.php">Sign Up</a></li>
+                                       <li><a href="login.php">Login</a></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -155,9 +132,9 @@
             <div class="container">
                <div class="row ">
                <div class="col-12">
-                <form action="/github/databasehotel/action_page.php">
+                <form >
                 <div class="booking-wrap d-flex justify-content-between align-items-center">
-                 
+                 <form method="post">
                     <!-- select in date -->
                     <div class="single-select-box mb-30">
                         <!-- select out date -->
@@ -165,7 +142,7 @@
                             <span> Check In Date:</span>
                         </div>
                         <div class="boking-datepicker">
-                            <input id="datepicker1"  placeholder="10/12/2020" />
+                            <input type="date" id="datepicker1" name="check_in" placeholder="10/12/2020"  />
                         </div>
                    </div>
                     <!-- Single Select Box -->
@@ -175,7 +152,7 @@
                             <span>Check OutDate:</span>
                         </div>
                         <div class="boking-datepicker">
-                            <input id="datepicker2"  placeholder="12/12/2020" />
+                            <input id="datepicker2" name="check_out"  placeholder="12/12/2020" />
                         </div>
                    </div>
                     <!-- Single Select Box -->
@@ -186,7 +163,7 @@
                         <div class="select-this">
                             <form action="#">
                                 <div class="select-itms">
-                                    <select name="select" id="select1">
+                                    <select name="select" id="select1" name="numOccupants">
                                         <option value="">1</option>
                                         <option value="">2</option>
                                         <option value="">3</option>
@@ -200,9 +177,46 @@
                    </div>
 
                     <div class="single-select-box pt-45 mb-30">
-                        <a href="#" class="btn select-btn">Book Now</a>
+                   
+                        <input type='submit' href="#" class="btn select-btn" name="bookBtn">Book Now</a>
                    </div>
+                   </form> 
+                   <!--------------------------------PHP CODE INSERT INTO ---------------------------->
+
+                <?php
+
+
+                    $con = mysql_connect('localhost', 'root','usbw'); /*Function used
+                    to connect to database*/
+                    $db = mysql_select_db('test');
+                    if($con) //Verify  connection to database
+                    {
+                    //
+                    echo "Successfully connected to the database";
+                    }
+                    else {
+                    die("Error");
+                    }
+
+
+                mysql_select_db('test', $con);
+
+
+            $query ="SELECT capacity, 'availability' from room";
+
+            //Add if statement for availability
+
+
+
+
+
+                      
+                        
+                // Close connection
+                mysql_close($con);
+                ?>
                
+                 <!--------------------------------PHP CODE ENDS HERE ---------------------------->
 
                 </div>
             </form>
