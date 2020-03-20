@@ -11,7 +11,7 @@
 $servername = "localhost";
 $username ="root";
 $password = "usbw";
-$dbname = "hotel";
+$dbname = "421 Database";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 echo("connection");
 
@@ -22,27 +22,26 @@ echo("connection");
 $user = $_POST['username'];
 $pass = $_POST['password'];
 $usertype = $_POST['usertype'];
-$query = "SELECT * FROM users WHERE username = $user and password = $pass
-and usertype = $usertype";
-$result = mysqli_query($conn,$query);
+$query = "SELECT * FROM guest WHERE GFname = '$user' and GLname = '$pass'";
+$result = mysqli_query($conn,$query) or die(mysqli_error($conn));;
 
+$count = mysqli_num_rows($result);
+echo $count;
+	if($count == 1) {
 
-	if($usertype == 'Manager'){
+	if($usertype == 'Guest'){
 		?>
 
-		<script type = "text/javascript">
-		<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . '/manager.php');?>
-			<?php
-		}else{
-			?>
+
 			<?php echo 'orange' ?>
 			<script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . '/user.php');?>
+			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . '/Github/databasehotel/databasetabletest.php');?>
 			<?php
 
-		}
-
-	}
+		}else{ echo "Wrong username and pass";
+}
+}
+}
 ?>
 
 

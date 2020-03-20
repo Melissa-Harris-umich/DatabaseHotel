@@ -8,7 +8,7 @@
  <?php
    $con = mysql_connect('localhost', 'root','usbw'); /*Function used
    to connect to database*/
-   $db = mysql_select_db('test');
+   $db = mysql_select_db('421 Database');
    if($con) //Verify  connection to database
    {
     //echo "Successfully connected to the database";

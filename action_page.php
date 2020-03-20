@@ -12,7 +12,7 @@ if($con === false){
 
 
 
-mysql_select_db('test', $con);
+mysql_select_db('421 Database', $con);
 //Insert into Guest table
 
 

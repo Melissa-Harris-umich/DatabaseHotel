@@ -142,7 +142,7 @@
                             <span> Check In Date:</span>
                         </div>
                         <div class="boking-datepicker">
-                            <input type="date" id="datepicker1" name="check_in" placeholder="10/12/2020"  />
+                            <input id="datepicker1" name="check_in" placeholder="10/12/2020"  />
                         </div>
                    </div>
                     <!-- Single Select Box -->
@@ -188,7 +188,7 @@
 
                     $con = mysql_connect('localhost', 'root','usbw'); /*Function used
                     to connect to database*/
-                    $db = mysql_select_db('test');
+                    $db = mysql_select_db('421 Database',$con);
                     if($con) //Verify  connection to database
                     {
                     //
@@ -202,9 +202,17 @@
                 mysql_select_db('test', $con);
 
 
-            $query ="SELECT capacity, 'availability' from room";
+            $result ="SELECT * from room where 'Availability' = 1 ";
 
             //Add if statement for availability
+
+            if($result) {?>
+
+            <table  style="width:600px; line-height:40px;" id="Guest_Table">
+                <tr> <th colspan="5"><h3>Available Rooms</h3></th></tr>
+
+                <?
+            }
 
 
 
