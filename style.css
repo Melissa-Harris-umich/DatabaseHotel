@@ -1,8 +1,5 @@
-/* body,html {
-	margin:0px;
-	padding: 0px;
-	background: #2D649C url('images/background.jpg') repeat-x fixed top;
-} */
+
+
 table, th, td {
 	border: 3px solid black;
 	margin-left:auto; 
@@ -15,6 +12,13 @@ h1{
 	color: peru;
 	text-emphasis: 2em;
 }
+
+
+.navbar-dark .navbar-brand {
+    color: #dab31e !important;
+}
+
+
 
 
 
