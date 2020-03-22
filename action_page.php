@@ -12,12 +12,12 @@ if($con === false){
 
 
 
-mysql_select_db('421 Database', $con);
+mysql_select_db('hotel_db', $con);
 //Insert into Guest table
 
 
-$sql = "INSERT INTO GUEST (GFname, GLname, GAddress,GCity) values 
-('$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
+$sql = "INSERT INTO GUEST (username, password, usertype, GFname, GLname, GAddress,  GCity) values
+('$_POST[username]','$_POST[password]','$_POST[usertype]','$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
 
 
 
@@ -27,11 +27,11 @@ if(mysql_query($sql,$con )){
 } else{
     echo "ERROR: Could not able to execute $sql. " . mysql_error($con);
 }
- 
+
 
 
 // Close connection
 mysql_close($con);
 ?>
 <br>
-<a href="http://localhost/Github/DatabaseHotel/databaseTableTest.php"><button>Click here to go back</button></a>
+<a href="index.php"><button>Click here to go back</button></a>

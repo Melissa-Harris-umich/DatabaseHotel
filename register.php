@@ -8,7 +8,7 @@
  <?php
    $con = mysql_connect('localhost', 'root','usbw'); /*Function used
    to connect to database*/
-   $db = mysql_select_db('421 Database');
+   $db = mysql_select_db('hotel_db');
    if($con) //Verify  connection to database
    {
     //echo "Successfully connected to the database";
@@ -25,18 +25,24 @@
 
 
 <!---Input form here HTML ---->
-<form action="/github/databasehotel/action_page.php" method="post" name="action" value="updateG"> 
+<form action="action_page.php" method="post" name="action" value="updateG">
   <!---Name of table column goes in the name= field-->
 
   <div>
+  <label>Username:</label>
+  <input type="text" id="username" name="username"><br>
+  <label>Password:</label>
+  <input type="password" id="password" name="password"><br>
+  <label>Usertype:</label>
+  <input type="text" id="usertype" name="usertype" placeholder = "Guest/Manager"><br>
   <label>First name:</label>
-  <input type="text" id="Fname" name="GFname"><br><br>
+  <input type="text" id="Fname" name="GFname"><br>
   <label>Last name:</label>
-  <input type="text" id="Lname" name="GLname"><br><br>
+  <input type="text" id="Lname" name="GLname"><br>
   <label>Address:</label>
-  <input type="text" id="address" name="GAddress"><br><br>
+  <input type="text" id="address" name="GAddress"><br>
   <label>City:</label>
-  <input type="text" id="city" name="GCity"><br><br>
+  <input type="text" id="city" name="GCity"><br>
   <input type="submit" value="Submit" >
 </div>
 </form>
@@ -45,50 +51,7 @@
 
 
 
-<?php
-//Get table data
-$query = "SELECT * FROM guest ";//Display info within Database
-$result =mysql_query($query);
-?>
-<!-----shows guest table----------->
-<table  style="width:600px; line-height:40px;" id="Guest_Table">
 
-<tr>
- <th colspan="5"><h3>Guest Table</h3></th>
-</tr>
-<th> ID</th>
-<th>First Name</th>
-<th>Last Name</th>
-<th>Address</th>
-<th>City</th>
-</tr>
-
-<?php
-    
- //Table data taken from assigned variables, displays guest data in Front-end table  
- while($row = mysql_fetch_assoc($result))
- {
-
- ?>
- <tr>
- <td><?php echo  $row['GuestID']; ?></td>
- <td><?php echo  $row['GFname']; ?></td>
- <td><?php echo  $row['GLname']; ?></td>
- <td><?php echo  $row['GAddress']; ?></td>
- <td><?php echo  $row['GCity']; ?></td>
- 
- </tr>
-
- <?php
- }
-     ?>
-
-
- </table>
-
-  
 
 </body>
 </html>
-
-

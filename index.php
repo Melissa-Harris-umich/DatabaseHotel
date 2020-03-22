@@ -11,7 +11,7 @@
 $servername = "localhost";
 $username ="root";
 $password = "usbw";
-$dbname = "421 Database";
+$dbname = "hotel_db";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 echo("connection");
 
@@ -21,10 +21,10 @@ echo("connection");
 
 
 	//Validates user that is logging in
-$user = $_POST['username'];
-$pass = $_POST['password'];
+$user = $_POST['username'];  //Retrieve data stored in username field
+$pass = $_POST['password'];  //Retrieve data stored in password field
 $usertype = $_POST['usertype'];
-$query = "SELECT * FROM guest WHERE GFname = '$user' and GLname = '$pass'";
+$query = "SELECT * FROM guest WHERE username = '$user' and password = '$pass'";
 $result = mysqli_query($conn,$query) or die(mysqli_error($conn));;
 
 $count = mysqli_num_rows($result);
@@ -35,16 +35,17 @@ echo $count;
 		?>
 
 
+
 			<?php echo 'orange' ?>
 			<script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . '/github/databasehotel/guest.php');?>
+			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'guest.php');?>
 			<?php
 
 		}else if($usertype == 'Manager'){
 
 			?>
 			<script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . '/github/databasehotel/manager.php');?>
+			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'manager.php');?>
 
 			<?php
 		}
