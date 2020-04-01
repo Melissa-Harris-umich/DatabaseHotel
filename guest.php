@@ -55,8 +55,8 @@
 
 }
 label{
-  color:rgb(231, 202, 173);
-  font-weight: bold;
+  color:white;
+ 
 }
 #myDIV {
   width: 100%;
@@ -67,12 +67,29 @@ label{
 }
 
 #Del {
-  width: 100%;
-  padding: 5px 0;
+ 
+  padding: 55px 0;
   text-align: center;
   margin-top: 5px;
   display: none;
+  align-content:center;
 }
+
+#Can {
+ 
+  text-align: center;
+  margin-top: 5px;
+  display: none;
+  align-content:center;
+}
+
+.btn-theme {
+  background-color:#dab31e;
+
+}
+  h3 {
+    color: #dab31e;
+  }
 
 
 </style>
@@ -135,12 +152,12 @@ label{
 
 
 <!------------------------- Cancel Option delete from table here -->
-<div id="Del" display="none">
-  <label for="Del">Please choose reservation to cancel:</label>
+<div id="Can" display="none">
+  <label for="Can">Please choose reservation to cancel:</label>
 
   <?php
 //Get table data
-$query = "SELECT * FROM guest ";//Display info within Database
+$query = "SELECT * FROM guest ";//Change to booking information
 $result =mysql_query($query);
 ?>
 
@@ -179,28 +196,44 @@ $result =mysql_query($query);
             ?>
          </tbody>
      </table>
+     <button type="submit" class="btn btn-theme">Submit</button>
  </div>
 <!-------------------------- Cancel a room menu options end here -->
 
 
+<!--------------------------------DELETE ACCOUNT------------------------------->
+<div id="Del" display="none">
+<h3>Are you sure you want to delete your account?</h3>
+<input type="radio">yes</input>  
+<input type="radio">no</input>
 
+<!--------------------------------DELETE ACCOUNT------------------------------->
 
 
 <!-- Javascript -->
 <script>
 // Function for toggling menu after button click here
 function myFunction(id) {
+  var can = document.getElementById("Can");
+  var b = document.getElementById("myDIV");
+  var del = document.getElementById("Del");
   
   if(id =="Book") {
     var x = document.getElementById("myDIV");
-    var del = document.getElementById("Del");
     del.style.display = "none";
+    can.style.display = "none";
 
   }
   
   if(id =="Cancel") {
+  var x = document.getElementById("Can");
+  del.style.display = "none";
+  b.style.display = "none";
+  }
+
+  if(id =="Delete") {
   var x = document.getElementById("Del");
-  var b = document.getElementById("myDIV");
+  can.style.display = "none";
   b.style.display = "none";
   }
 
