@@ -27,7 +27,8 @@
       <?php
    $con = mysql_connect('localhost', 'root','usbw'); /*Function used
    to connect to database*/
-   $db = mysql_select_db('421 database');
+   $db = mysql_select_db('hotel_db');
+
    if($con) //Verify  connection to database
    {
     //echo "Successfully connected to the database";
@@ -36,6 +37,14 @@
     die("Error");
   }
 
+
+
+
+      
+      
+      
+        }
+    
 
 ?>
 <body>
@@ -55,8 +64,8 @@
 
 }
 label{
-  color:rgb(231, 202, 173);
-  font-weight: bold;
+  color:white;
+ 
 }
 #myDIV {
   width: 100%;
@@ -67,12 +76,29 @@ label{
 }
 
 #Del {
-  width: 100%;
-  padding: 5px 0;
+ 
+  padding: 55px 0;
   text-align: center;
   margin-top: 5px;
   display: none;
+  align-content:center;
 }
+
+#Can {
+ 
+  text-align: center;
+  margin-top: 5px;
+  display: none;
+  align-content:center;
+}
+
+.btn-theme {
+  background-color:#dab31e;
+
+}
+  h3 {
+    color: #dab31e;
+  }
 
 
 </style>
@@ -110,8 +136,9 @@ label{
     <h1>Choose an Option</h1>
 
 
-<form method="post">
- <!-- Button Options -->
+
+<!-----<form action='/github/databasehotel/guest.php' method="post">
+Button Options -->
  <button type="button" id= "Book"  class="btn btn-dark" onclick="myFunction(this.id)" >Book a room</button>
  <button type="button" id="Cancel" class="btn btn-dark" onclick="myFunction(this.id)">Cancel your reservation</button>
  <button type="button" id="Delete" class="btn btn-danger" onclick="myFunction(this.id)">Delete your account</button>
@@ -119,6 +146,7 @@ label{
 
  <!---------------------------------Book a room menu functions  -->
  <div id="myDIV" display="none">
+ <form action="/github/databasehotel/action_page.php" method="post" name="action">
  <label for="num_guests">Number of guests: </label>
 <select id="num_guests" name="num_guests">
   <option value="1">1</option>
@@ -127,21 +155,28 @@ label{
   <option value="4">4</option>
 </select>
 <label for="checkin">Check in date:</label>
-<input type ="date" name="checkin">
+<input type ="date" id="cin" name="checkin">
 <label for="checkout">Check out date:</label>
 <input type ="date" name="checkout">
+
+<input type="submit" name="bkbtn" class="btn btn-theme" >
+
+</form>
 </div>
+
+
+
 <!-------------------------- Book a room menu options end here -->
 
 
 <!------------------------- Cancel Option delete from table here -->
-<div id="Del" display="none">
-  <label for="Del">Please choose reservation to cancel:</label>
+<div id="Can" display="none">
+  <label for="Can">Please choose reservation to cancel:</label>
 
   <?php
 //Get table data
-$query = "SELECT * FROM guest ";//Display info within Database
-$result =mysql_query($query);
+$reservations = "SELECT * FROM booking  ";//Change to booking information Get user id php for session
+$result =mysql_query($reservations);
 ?>
 
   <table class="table table-sm table-dark" id="Guest_Table">
@@ -149,11 +184,12 @@ $result =mysql_query($query);
     <tr>	
     <thead><h3>Your Reservations</h3></th>
     </tr>
-    <th scope="col"> ID</th>
-    <th scope="col">First Name</th>	
-    <th scope="col">Last Name</th>	
-    <th scope="col">Address</th>
-    <th scope="col">City</th>
+    <th scope="col">Hotel</th>
+    <th scope="col">Guest ID</th>	
+    <th scope="col">Room ID</th>	
+    <th scope="col">Check in Date:</th>
+    <th scope="col">Check out Date:</th>
+    <th scope="col">Number of occupants</th>
     <th scope="col">Check to Cancel</th>
     </tr>	
 </thead>
@@ -166,41 +202,65 @@ $result =mysql_query($query);
      {
        ?>
   
-     <td><?php echo  $row['GuestID']; ?></td>
-     <td><?php echo  $row['GFname']; ?></td>
-     <td><?php echo  $row['GLname']; ?></td>
-     <td><?php echo  $row['GAddress']; ?></td>
-     <td><?php echo  $row['GCity']; ?></td>
+     <td><?php echo  $row['HID']; ?></td>
+     <td><?php echo  $row['GID']; ?></td>
+     <td><?php echo  $row['RID']; ?></td>
+     <td><?php echo  $row['Start_date']; ?></td>
+     <td><?php echo  $row['End_date']; ?></td>
+     <td><?php echo  $row['Num_occupance']; ?></td>
      <td><input type="checkbox"></td>
      </tr>
          
          <?php
         }
-            ?>
+
+     
+
+mysqli_close($con);
+?>
+            
          </tbody>
      </table>
+     <button type="submit" class="btn btn-theme">Submit</button>
  </div>
 <!-------------------------- Cancel a room menu options end here -->
 
 
+<!--------------------------------DELETE ACCOUNT------------------------------->
+<div id="Del" display="none">
+<h3>Are you sure you want to delete your account?</h3>
+<input type="radio" name ='yes'>yes</input>  
+<input type="radio" name='no'>no</input>
 
+</div>
+
+<!--------------------------------DELETE ACCOUNT------------------------------->
 
 
 <!-- Javascript -->
 <script>
 // Function for toggling menu after button click here
 function myFunction(id) {
+  var can = document.getElementById("Can");
+  var b = document.getElementById("myDIV");
+  var del = document.getElementById("Del");
   
   if(id =="Book") {
     var x = document.getElementById("myDIV");
-    var del = document.getElementById("Del");
     del.style.display = "none";
+    can.style.display = "none";
 
   }
   
   if(id =="Cancel") {
+  var x = document.getElementById("Can");
+  del.style.display = "none";
+  b.style.display = "none";
+  }
+
+  if(id =="Delete") {
   var x = document.getElementById("Del");
-  var b = document.getElementById("myDIV");
+  can.style.display = "none";
   b.style.display = "none";
   }
 
@@ -211,14 +271,9 @@ function myFunction(id) {
   }
 
   
+
 }
-
-// Toggle function end
-
-
 </script>
-<!-- End of Javascript code -->
-
 
 </body>
 </html>
