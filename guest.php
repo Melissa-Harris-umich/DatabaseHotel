@@ -25,25 +25,8 @@
 
       <!-----PHP CONNECTING---->
       <?php
-   $con = mysql_connect('localhost', 'root','usbw'); /*Function used
-   to connect to database*/
-   $db = mysql_select_db('hotel_db');
+   $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
 
-   if($con) //Verify  connection to database
-   {
-    //echo "Successfully connected to the database";
-  }
-  else {
-    die("Error");
-  }
-
-
-
-
-      
-      
-      
-        }
     
 
 ?>
@@ -146,7 +129,7 @@ Button Options -->
 
  <!---------------------------------Book a room menu functions  -->
  <div id="myDIV" display="none">
- <form action="/github/databasehotel/action_page.php" method="post" name="action">
+ <form action="action_page.php" method="post" name="action">
  <label for="num_guests">Number of guests: </label>
 <select id="num_guests" name="num_guests">
   <option value="1">1</option>
@@ -176,9 +159,10 @@ Button Options -->
   <?php
 //Get table data
 $reservations = "SELECT * FROM booking  ";//Change to booking information Get user id php for session
-$result =mysql_query($reservations);
+$result =mysqli_query($con,$reservations);
 ?>
-
+<div>
+<form action="guest.php" method="post" >
   <table class="table table-sm table-dark" id="Guest_Table">
 
     <tr>	
@@ -196,9 +180,9 @@ $result =mysql_query($reservations);
 <tbody>
     <tr>	
     <?php	
-   
+  
      //Table data taken from assigned variables, displays guest data in Front-end table  
-     while($row = mysql_fetch_assoc($result)) 
+     while($row = mysqli_fetch_assoc($result)) 
      {
        ?>
   
@@ -208,20 +192,44 @@ $result =mysql_query($reservations);
      <td><?php echo  $row['Start_date']; ?></td>
      <td><?php echo  $row['End_date']; ?></td>
      <td><?php echo  $row['Num_occupance']; ?></td>
-     <td><input type="checkbox"></td>
+     <td><input type="checkbox" name="xRes[]" value="<?php echo  $row['Start_date']; ?>">
      </tr>
          
+
+    
+    
          <?php
         }
-
-     
-
-mysqli_close($con);
+       
 ?>
-            
          </tbody>
+
+     <button type="submit" class="btn btn-theme" name="can_res">Delete</button>
+            
+     
      </table>
-     <button type="submit" class="btn btn-theme">Submit</button>
+     </div>
+    
+    <?php
+   
+if(isset($_POST['can_res'])) {
+
+
+  // $Delete_res = "Delete * from booking where Start_date=  '$_POST['can_res']' ";
+  // $result = mysqli_query($conn,$Delete_res) or die(mysqli_error($conn));
+  ?>
+  <script type = "text/javascript">
+			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'guest.php');?>
+			<?php
+      echo'Deleted record!';
+
+
+}
+?>
+
+</script>
+
+    </form>
  </div>
 <!-------------------------- Cancel a room menu options end here -->
 
@@ -273,6 +281,10 @@ function myFunction(id) {
   
 
 }
+
+<?php
+mysqli_close($con);
+?>
 </script>
 
 </body>

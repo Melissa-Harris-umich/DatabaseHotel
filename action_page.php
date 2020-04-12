@@ -50,6 +50,7 @@ AND RID = ROOMID
       <td><?php echo  $row['cost']; ?></td>
       <td><?php echo  $row['rtype']; ?></td>
       <td><?php echo  $row['cap']; ?></td>
+      <td><input type="checkbox" Name='choice'></td>
       </tr>
       </table>
 <?php
