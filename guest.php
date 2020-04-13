@@ -15,10 +15,9 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
-
+  
+  <script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!---Our CSS Style------------->
 
@@ -162,12 +161,13 @@ $reservations = "SELECT * FROM booking  ";//Change to booking information Get us
 $result =mysqli_query($con,$reservations);
 ?>
 <div>
-<form action="guest.php" method="post" >
+<!-- <form action="guest.php" method="post" > -->
   <table class="table table-sm table-dark" id="Guest_Table">
 
     <tr>	
     <thead><h3>Your Reservations</h3></th>
     </tr>
+    <th> <input type='checkbox' id='checkAll'></th>
     <th scope="col">Hotel</th>
     <th scope="col">Guest ID</th>	
     <th scope="col">Room ID</th>	
@@ -182,17 +182,17 @@ $result =mysqli_query($con,$reservations);
     <?php	
   
      //Table data taken from assigned variables, displays guest data in Front-end table  
-     while($row = mysqli_fetch_assoc($result)) 
+     while($row = mysqli_fetch_array($result)) 
      {
        ?>
-  
+  <td><input class='checkbox ' type="checkbox"  id="<?php echo  $row['Start_date']; ?>" name="id[]"></td>
      <td><?php echo  $row['HID']; ?></td>
      <td><?php echo  $row['GID']; ?></td>
      <td><?php echo  $row['RID']; ?></td>
      <td><?php echo  $row['Start_date']; ?></td>
      <td><?php echo  $row['End_date']; ?></td>
      <td><?php echo  $row['Num_occupance']; ?></td>
-     <td><input type="checkbox" name="xRes[]" value="<?php echo  $row['Start_date']; ?>">
+     
      </tr>
          
 
@@ -204,36 +204,64 @@ $result =mysqli_query($con,$reservations);
 ?>
          </tbody>
 
-     <button type="submit" class="btn btn-theme" name="can_res">Delete</button>
+     <button type="button" class="btn btn-theme" id="can_res">Delete</button>
             
      
      </table>
      </div>
     
-    <?php
-   
-if(isset($_POST['can_res'])) {
 
 
-  // $Delete_res = "Delete * from booking where Start_date=  '$_POST['can_res']' ";
-  // $result = mysqli_query($conn,$Delete_res) or die(mysqli_error($conn));
-  ?>
-  <script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'guest.php');?>
-			<?php
-      echo'Deleted record!';
-
-
-}
-?>
-
-</script>
 
     </form>
  </div>
 <!-------------------------- Cancel a room menu options end here -->
+<script>
+$(document).ready(function(){
+  $('#checkAll').click(function(){
+    if(this.checked){
+      $('.checkbox').each(function(){
+        this.checked = true;
+      });
+    }else{
+      $('.checkbox').each(function() {
+        this.checked = false;
+      });
+    
+    }
+  });
+
+$('#can_res').click(function(){
+  var dataArr = new Array();
+  if($('input:checkbox:checked').length > 0){
+    $('input:checkbox:checked').each(function(){
+      dataArr.push($(this).attr('id'));
+    });
+    sendResponse(dataArr)
+  }else{
+    alert('No records selected');
+  }
+
+});
+});
 
 
+function sendResponse(dataArr){
+  $.ajax({
+    type : 'post',
+    url : 'action_page.php',
+    data : {'data' :dataArr},
+    success : function(response) {
+                alert(response);
+              },
+    error : function(errResponse){
+              alert(errResponse);
+    
+  }
+  });
+
+}
+</script>
 <!--------------------------------DELETE ACCOUNT------------------------------->
 <div id="Del" display="none">
 <h3>Are you sure you want to delete your account?</h3>

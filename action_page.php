@@ -16,9 +16,9 @@ if($con === false){
 
 ///When book button is submitted
 
-$bookbtn=$_POST['bkbtn'];
 
-if(isset($bookbtn)) {
+
+if(isset($_POST['bkbtn'])) {
 
 $cin = $_POST['checkin'];
 $out = $_POST['checkout'];
@@ -76,12 +76,25 @@ if(mysql_query($sql,$con )){
 
     }
 // Close connection
+
+$aResult = mysqli_query($con,"SELECT * FROM booking") or die(mysqli_error($con));
+
+
+if(isset($_POST['data'])){
+        $dataArr = $_POST['data'];
+        foreach($dataArr as $id){
+            mysqli_query($con, "DELETE FROM booking where Start_date='$id' " );
+        }
+        echo ' record deleted successfully';
+}
 mysqli_close($con);
 ?>
 <br>
-<a href="guest.php"><button>Choose a different date</button></a>
-<a href="index.php"><button>Click here to go back</button></a>
+<!-- <a href="guest.php"><button>Choose a different date</button></a>
+<a href="index.php"><button>Click here to go back</button></a> -->
 </table>
+
+
 
   
 
