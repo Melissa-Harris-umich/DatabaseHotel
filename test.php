@@ -25,8 +25,6 @@
       <?php
    $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
 
-    
-
 ?>
 <body>
 
@@ -81,12 +79,13 @@ $result =mysqli_query($con,$reservations);
         }
        
 ?>
+   </table>
          </tbody>
 
      <button type="button" class="btn btn-theme" id="delete">Delete</button>
             
      
-     </table>
+  
      </div>
     
 

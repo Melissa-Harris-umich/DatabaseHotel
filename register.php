@@ -6,17 +6,8 @@
 </head>
 <body>
  <?php
-   $con = mysql_connect('localhost', 'root','usbw'); /*Function used
-   to connect to database*/
-   $db = mysql_select_db('hotel_db');
-   if($con) //Verify  connection to database
-   {
-    //echo "Successfully connected to the database";
-  }
-  else {
-    die("Error");
-  }
-
+ session_start();
+   $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
 
 ?>
 <br />
@@ -25,7 +16,7 @@
 
 
 <!---Input form here HTML ---->
-<form action="action_page.php" method="post" name="action" value="updateG">
+<form action="phpreference.php" method="post" name="action" >
   <!---Name of table column goes in the name= field-->
 
   <div>
@@ -43,7 +34,7 @@
   <input type="text" id="address" name="GAddress"><br>
   <label>City:</label>
   <input type="text" id="city" name="GCity"><br>
-  <input type="submit" value="Submit" >
+  <input type="submit" value="Submit" name='Reg_Insert'>
 </div>
 </form>
 

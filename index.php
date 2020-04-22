@@ -43,8 +43,6 @@ echo $count;
 
 
 			<?php echo 'orange' ;
-		
-		
 			$SESSION['user'] = $_POST['username'];//Retrieves guest id for account deletion and booking addition and deletion
 			header('Location: guest.php');
 			?>

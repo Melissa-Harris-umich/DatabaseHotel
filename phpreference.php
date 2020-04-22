@@ -6,16 +6,7 @@
 </head>
 <body>
  <?php
-   $con = mysql_connect('localhost', 'root','usbw'); /*Function used
-   to connect to database*/
-   $db = mysql_select_db('hotel_db');
-   if($con) //Verify  connection to database
-   {
-    //echo "Successfully connected to the database";
-  }
-  else {
-    die("Error");
-  }
+ $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
 
 
 ?>
@@ -24,74 +15,34 @@
 <h1>Hotel Database</h1>
 
 
-<!---Input form here HTML ---->
-<form action="/github/databasehotel/action_page.php" method="post" name="action" value="updateG"> 
-  <!---Name of table column goes in the name= field-->
-
-  <div>
-  <label>First name:</label>
-  <input type="text" id="Fname" name="GFname"><br><br>
-  <label>Last name:</label>
-  <input type="text" id="Lname" name="GLname"><br><br>
-  <label>Address:</label>
-  <input type="text" id="address" name="GAddress"><br><br>
-  <label>City:</label>
-  <input type="text" id="city" name="GCity"><br><br>
-  <input type="submit" value="Submit" name="Gpage" >
-</div>
-</form>
-
 
 
 <?php
-//Get table data
-$query = "SELECT * FROM registration ";//Display info within Database
-$result =mysql_query($query);
 
-
-if (!$result) {
-    echo "DB Error, could not list tables\n";
-    echo 'MySQL Error: ' . mysql_error();
-    exit;
-}
-?>
-<!-----shows guest table----------->
-<table  style="width:600px; line-height:40px;" id="Guest_Table">
-
-<tr>
- <th colspan="5"><h3>Guest Table</h3></th>
-</tr>
-<th> ID</th>
-<th>First Name</th>
-<th>Last Name</th>
-<th>Address</th>
-<th>City</th>
-</tr>
-
-<?php
-    
- //Table data taken from assigned variables, displays guest data in Front-end table  
- while($row = mysql_fetch_assoc($result))
- {
-
- ?>
- <tr>
- <td><?php echo  $row['GuestID']; ?></td>
- <td><?php echo  $row['GFname']; ?></td>
- <td><?php echo  $row['GLname']; ?></td>
- <td><?php echo  $row['GAddress']; ?></td>
- <td><?php echo  $row['GCity']; ?></td>
  
- </tr>
+    
 
- <?php
- }
-     ?>
+    if(isset($_POST['Reg_Insert'])) {
+
+        $reg = $_POST['Reg_Insert'];
+
+$sql = "INSERT INTO Registration (username, password, usertype, GFname, GLname, GAddress,  GCity) values
+('$_POST[username]','$_POST[password]','$_POST[usertype]','$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
 
 
- </table>
+    
 
-  
+if(mysqli_query($con,$sql )){
+    echo "Records added successfully.";
+} else{
+    echo "ERROR: Could not able to execute $sql. " . mysql_error($con);
+}
+
+
+    }
+// Close connection
+
+  ?>
 
 </body>
 </html>

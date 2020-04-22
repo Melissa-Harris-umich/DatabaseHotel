@@ -57,9 +57,9 @@ AND RID = ROOMID
       <form action="action_page.php" method="post" name="action">
       <table>
       <tr>
-      <td><?php echo  $row['RoomID']; ?></td>
-      <td><?php echo  $row['code']; ?></td>
-      <td><?php echo  $row['cost']; ?></td>
+      <td name='RoomID'><?php echo  $row['RoomID']; ?></td>
+      <td name='code'><?php echo  $row['code']; ?></td>
+      <td name='rtype'><?php echo  $row['cost']; ?></td>
       <td><?php echo  $row['rtype']; ?></td>
       <td><?php echo  $row['cap']; ?></td>
       <td><input type="checkbox"  value='1'  id="<?php echo  $row['RoomID']; ?>" name="id[]"></td>
@@ -135,11 +135,12 @@ $rm = $_POST['RoomID'];
 
 <?php
 
-
  
     
 
-    if(isset($_Post['Gpage'])) {
+    if(isset($_POST['Reg_Insert'])) {
+
+        $reg = $_POST['Reg_Insert'];
 
 $sql = "INSERT INTO Registration (username, password, usertype, GFname, GLname, GAddress,  GCity) values
 ('$_POST[username]','$_POST[password]','$_POST[usertype]','$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
@@ -147,7 +148,7 @@ $sql = "INSERT INTO Registration (username, password, usertype, GFname, GLname, 
 
     
 
-if(mysql_query($sql,$con )){
+if(mysqli_query($con,$sql )){
     echo "Records added successfully.";
 } else{
     echo "ERROR: Could not able to execute $sql. " . mysql_error($con);
@@ -171,7 +172,7 @@ mysqli_close($con);
 ?>
 <br>
 
-</table>
+
 
 
 
