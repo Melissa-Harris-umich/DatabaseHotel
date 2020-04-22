@@ -6,8 +6,31 @@
 </head>
 <body>
  <?php
- session_start();
-   $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
+   $con = mysql_connect('localhost', 'root','usbw'); /*Function used
+   to connect to database*/
+   $db = mysql_select_db('hotel_db');
+   if($con) //Verify  connection to database
+   {
+    //echo "Successfully connected to the database";
+  }
+  else {
+    die("Error");
+  }
+
+  if(!empty($_POST['submit'])) {
+echo 'Cookies';
+$sql = "INSERT INTO Registration (username, password, User_type, GFname, GLname, GAddress,  GCity) values
+('$_POST[username]','$_POST[password]','$_POST[usertype]','$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
+
+
+
+
+if(mysql_query($sql,$con )){
+  echo "Records added successfully.";
+} else{
+  echo "ERROR: Could not able to execute $sql. " . mysql_error($con);
+}
+}
 
 ?>
 <br />
@@ -16,7 +39,7 @@
 
 
 <!---Input form here HTML ---->
-<form action="phpreference.php" method="post" name="action" >
+<form action="register.php" method="post" name="action" value="updateG">
   <!---Name of table column goes in the name= field-->
 
   <div>
