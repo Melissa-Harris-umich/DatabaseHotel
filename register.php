@@ -8,7 +8,7 @@
  <?php
    $con = mysql_connect('localhost', 'root','usbw'); /*Function used
    to connect to database*/
-   $db = mysql_select_db('hotel_db');
+   $db = mysql_select_db('421 project');
    if($con) //Verify  connection to database
    {
     //echo "Successfully connected to the database";
@@ -17,6 +17,20 @@
     die("Error");
   }
 
+  if(!empty($_POST['submit'])) {
+echo 'Cookies';
+$sql = "INSERT INTO Registration (username, password, User_type, GFname, GLname, GAddress,  GCity) values
+('$_POST[username]','$_POST[password]','$_POST[usertype]','$_POST[GFname]', '$_POST[GLname]', '$_POST[GAddress]','$_POST[GCity]')";
+
+
+
+
+if(mysql_query($sql,$con )){
+  echo "Records added successfully.";
+} else{
+  echo "ERROR: Could not able to execute $sql. " . mysql_error($con);
+}
+}
 
 ?>
 <br />
@@ -25,7 +39,7 @@
 
 
 <!---Input form here HTML ---->
-<form action="action_page.php" method="post" name="action" value="updateG">
+<form action="register.php" method="post" name="action" value="updateG">
   <!---Name of table column goes in the name= field-->
 
   <div>
@@ -43,7 +57,7 @@
   <input type="text" id="address" name="GAddress"><br>
   <label>City:</label>
   <input type="text" id="city" name="GCity"><br>
-  <input type="submit" value="Submit" >
+  <input type="submit" name = "submit" value="Submit" >
 </div>
 </form>
 
