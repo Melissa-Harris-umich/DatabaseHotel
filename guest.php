@@ -1,3 +1,14 @@
+<?php 
+session_start();
+if(isset($_SESSION['username']) && !empty($_SESSION['username'])) {
+  echo 'Set and not empty, and no undefined index error!';
+}
+//works manually, id does not move from one page to other, may need new page
+$_SESSION['GID'] = '3';
+  echo $_SESSION['GID'];
+$gid = $_SESSION['GID'];
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,10 +34,10 @@
 
 
       <!-----PHP CONNECTING---->
-      <?php
+  <?php 
+
    $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
 
-    
 
 ?>
 <body>
@@ -94,7 +105,7 @@ label{
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="#title">About Us</a>
@@ -128,7 +139,9 @@ Button Options -->
 
  <!---------------------------------Book a room menu functions  -->
  <div id="myDIV" display="none">
- <form action="action_page.php" method="post" name="action">
+<form action="action_page.php" method="post" name="action">
+
+ 
  <label for="num_guests">Number of guests: </label>
 <select id="num_guests" name="num_guests">
   <option value="1">1</option>
@@ -139,15 +152,46 @@ Button Options -->
 <label for="checkin">Check in date:</label>
 <input type ="date" id="cin" name="checkin">
 <label for="checkout">Check out date:</label>
-<input type ="date" name="checkout">
+<input type ="date" id="cout" name="checkout">
 
-<input type="submit" name="bkbtn" class="btn btn-theme" >
+<input type="submit" name="bkbtn" id="bkbtn" class="btn btn-theme" >
 
 </form>
 </div>
 
+<div id="show"></div>
 
+<!-- //Test 4/16/2020 Noy being used below --> 
+<script>
+$(document).ready(function() {
+$('#bkbtn').click(function(){
+  var checkin =$('#cin').val();
+  var checkout =$('#cout').val();
+    setInterval(function() {
+        $('#show').load('action_page.php')
+    }, 3000);
+  });
+ 
+    });
 
+    function sendResponse(){
+  $.ajax({
+    type : 'post',
+    url : 'action_page.php',
+    data : { 'data1':cin,
+            'data2': cout },
+    success : function(response) {
+                alert(response);
+              },
+    error : function(errResponse){
+              alert(errResponse);
+    
+  }
+  });
+
+}
+
+</script>
 <!-------------------------- Book a room menu options end here -->
 
 
@@ -157,7 +201,7 @@ Button Options -->
 
   <?php
 //Get table data
-$reservations = "SELECT * FROM booking  ";//Change to booking information Get user id php for session
+$reservations = "SELECT * FROM booking where GID = '$gid'   ";//gid needs to be replaced by session but issue
 $result =mysqli_query($con,$reservations);
 ?>
 <div>
@@ -174,7 +218,7 @@ $result =mysqli_query($con,$reservations);
     <th scope="col">Check in Date:</th>
     <th scope="col">Check out Date:</th>
     <th scope="col">Number of occupants</th>
-    <th scope="col">Check to Cancel</th>
+  
     </tr>	
 </thead>
 <tbody>
@@ -182,7 +226,7 @@ $result =mysqli_query($con,$reservations);
     <?php	
   
      //Table data taken from assigned variables, displays guest data in Front-end table  
-     while($row = mysqli_fetch_array($result)) 
+     while($row = mysqli_fetch_assoc($result)) 
      {
        ?>
   <td><input class='checkbox ' type="checkbox"  id="<?php echo  $row['Start_date']; ?>" name="id[]"></td>
@@ -236,6 +280,7 @@ $('#can_res').click(function(){
   if($('input:checkbox:checked').length > 0){
     $('input:checkbox:checked').each(function(){
       dataArr.push($(this).attr('id'));
+      $(this).closest('tr').remove();
     });
     sendResponse(dataArr)
   }else{
@@ -263,13 +308,30 @@ function sendResponse(dataArr){
 }
 </script>
 <!--------------------------------DELETE ACCOUNT------------------------------->
+<form action = "guest.php" method = "post">
 <div id="Del" display="none">
 <h3>Are you sure you want to delete your account?</h3>
-<input type="radio" name ='yes'>yes</input>  
-<input type="radio" name='no'>no</input>
+<?php
+//Get table data
 
+if(isset($_POST['delbtn'])){
+  echo "Delete button pressed";
+$Delete_user = "DELETE FROM REGISTRATION where GuestId = '$gid'   ";//gid needs to be replaced by session but issue
+$result2 =mysqli_query($con,$Delete_user);
+
+if($result2) {
+  header('Location: index.php');
+  echo "Records Deleted successfully.";
+
+}else{
+echo "Did not delete"; 
+  }  
+}
+?>
+
+ <button type="submit" class="btn btn-theme" name='delbtn'>Confirm</button>
 </div>
-
+</form>
 <!--------------------------------DELETE ACCOUNT------------------------------->
 
 

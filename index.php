@@ -16,16 +16,21 @@ $dbname = "hotel_db";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 echo("connection");
 
+
+
  if(isset($_POST['login_btn'])) //If user clicks login button
 
 {
 
 
 	//Validates user that is logging in
+
 $user = $_POST['username'];  //Retrieve data stored in username field
+
 $pass = $_POST['password'];  //Retrieve data stored in password field
 $usertype = $_POST['usertype'];
-$query = "SELECT * FROM guest WHERE username = '$user' and password = '$pass'";
+$guest_id = $_POST['guestid'];
+$query = "SELECT * FROM REGISTRATION WHERE username = '$user' and password = '$pass'";
 $result = mysqli_query($conn,$query) or die(mysqli_error($conn));;
 
 $count = mysqli_num_rows($result);
@@ -37,9 +42,12 @@ echo $count;
 
 
 
-			<?php echo 'orange' ?>
-			<script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'guest.php');?>
+			<?php echo 'orange' ;
+		
+		
+			$SESSION['user'] = $_POST['username'];//Retrieves guest id for account deletion and booking addition and deletion
+			header('Location: guest.php');
+			?>
 			<?php
 
 		}else if($usertype == 'Manager'){

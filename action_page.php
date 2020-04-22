@@ -1,3 +1,14 @@
+<?php 
+session_start();
+if(isset($_SESSION['username']) && !empty($_SESSION['username'])) {
+  echo 'Set and not empty, and no undefined index error!';
+}
+//works manually, id does not move from one page to other, may need new page
+$_SESSION['GID'] = '3';
+
+$gid = $_SESSION['GID'];
+
+?>
 <?php
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
@@ -22,7 +33,7 @@ if(isset($_POST['bkbtn'])) {
 
 $cin = $_POST['checkin'];
 $out = $_POST['checkout'];
-
+$guests = $_POST['num_guests'];
 $availability = "SELECT RoomID, room_type.code as code, room_type.type as rtype, room_type.cost as cost, room_type.capacity as cap
 FROM room inner join room_type on room.Rcode = room_type.code
 WHERE NOT EXISTS (
@@ -43,6 +54,7 @@ AND RID = ROOMID
      
 
       ?>
+      <form action="action_page.php" method="post" name="action">
       <table>
       <tr>
       <td><?php echo  $row['RoomID']; ?></td>
@@ -50,13 +62,81 @@ AND RID = ROOMID
       <td><?php echo  $row['cost']; ?></td>
       <td><?php echo  $row['rtype']; ?></td>
       <td><?php echo  $row['cap']; ?></td>
-      <td><input type="checkbox" Name='choice'></td>
+      <td><input type="checkbox"  value='1'  id="<?php echo  $row['RoomID']; ?>" name="id[]"></td>
       </tr>
       </table>
-<?php
+      <?php
 }
 
+$_POST['RoomID']; 
+$_POST['code']; 
+$_POST['cost']; 
+$_POST['rtype']; 
+$_POST['cap']; 
+$_POST['checkin'];
+$_POST['checkout'];
+$_POST['num_guests'];
+
+?>
+<button type="submit" name="addroom" class="btn btn-theme" >Book!</button>
+</form>
+     
+
+
+
+<?php
 }
+?>
+
+<?php
+
+    if(isset($_POST['addroom'])){
+
+      $cin =  $_POST['checkin'];
+$cout = $_POST['checkout'];
+$guests =$_POST['num_guests'];
+$rm = $_POST['RoomID'];
+        print_r($id);
+        echo $_POST['id'];
+        echo $_POST['RoomID'];
+        echo $gid;
+        echo $_POST['checkin'];
+        echo $_POST['checkout'];
+        echo $_POST['num_guests'];
+        echo $_POST['code'];
+        echo $rm;
+
+
+
+       
+
+        $query = "INSERT INTO BOOKING values (1,'$gid','$_POST[RoomID]',
+       '$cin','$cout','$guests')";
+
+    
+
+    if(mysqli_query($con,$query )){
+        echo "Records added successfully.";
+    } else{
+        echo "ERROR: Could not execute $query. " . mysqli_error($con);
+    }
+}
+
+?>
+
+
+
+
+
+
+
+
+
+
+<?php
+
+
+ 
     
 
     if(isset($_Post['Gpage'])) {
@@ -90,8 +170,7 @@ if(isset($_POST['data'])){
 mysqli_close($con);
 ?>
 <br>
-<!-- <a href="guest.php"><button>Choose a different date</button></a>
-<a href="index.php"><button>Click here to go back</button></a> -->
+
 </table>
 
 
