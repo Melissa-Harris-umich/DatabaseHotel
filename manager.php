@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+   <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   #myDIV {
@@ -82,11 +84,27 @@
 </style>
 </head>
 <body>
+<!--Top Navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+          <a class="navbar-brand" href="#">Manager</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+<!-- Top Navigation Cod Ends Here -->
+</header>
 
-
-
+<div class="center pt-5">
   <h1>Manager Page</h1>
   <p> Please select 1 option </p>
+  </div>
 
 <form action = "manager.php" method = "post">
 <input type="checkbox"name="language[]" id = "UpdateHotel" value="Update Hotel" onclick="myFunction(this.id)" />Update Hotel</p>

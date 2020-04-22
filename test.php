@@ -1,134 +1,239 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   
-    <!-- Bootstrap CSS -->
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-   <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
-  
-    <title>Guest Page</title>
-  </head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+
+<head>
+
+<title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
+</head>
+<?php
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    
-
-    <!---Our CSS Style------------->
-
-
-      <!-----PHP CONNECTING---->
-      <?php
-   $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
-
-?>
-<body>
-
-<!------------------------- Cancel Option delete from table here -->
-<div id="Can" display="none">
-  <label for="Can">Please choose reservation to cancel:</label>
-
-  <?php
-//Get table data
-$reservations = "SELECT * FROM booking  ";//Change to booking information Get user id php for session
-$result =mysqli_query($con,$reservations);
-?>
-<div>
-<!-- <form action="guest.php" method="post" > -->
-  <table class="table table-sm table-dark" id="Guest_Table">
-
-    <tr>	
-    <thead><h3>Your Reservations</h3></th>
-    </tr>
-    <th> <input type='checkbox' id='checkAll'></th>
-    <th scope="col">Hotel</th>
-    <th scope="col">Guest ID</th>	
-    <th scope="col">Room ID</th>	
-    <th scope="col">Check in Date:</th>
-    <th scope="col">Check out Date:</th>
-    <th scope="col">Number of occupants</th>
-    <th scope="col">Check to Cancel</th>
-    </tr>	
-</thead>
-<tbody>
-    <tr>	
-    <?php	
-  
-     //Table data taken from assigned variables, displays guest data in Front-end table  
-     while($row = mysqli_fetch_array($result)) 
-     {
-       ?>
-  <td><input class='checkbox ' type="checkbox"  id="<?php echo  $row['Start_date']; ?>" name="id[]"></td>
-     <td><?php echo  $row['HID']; ?></td>
-     <td><?php echo  $row['GID']; ?></td>
-     <td><?php echo  $row['RID']; ?></td>
-     <td><?php echo  $row['Start_date']; ?></td>
-     <td><?php echo  $row['End_date']; ?></td>
-     <td><?php echo  $row['Num_occupance']; ?></td>
-     
-     </tr>
-         
-
-    
-    
-         <?php
-        }
-       
-?>
-   </table>
-         </tbody>
-
-     <button type="button" class="btn btn-theme" id="delete">Delete</button>
-            
-     
-  
-     </div>
-    
+$servername = "localhost";
+$username ="root";
+$password = "usbw";
+$dbname = "hotel_db";
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+echo("connection");
 
 
 
-    </form>
- </div>
+ if(isset($_POST['login_btn'])) //If user clicks login button
+
+{
+
+
+	//Validates user that is logging in
+
+$user = $_POST['username'];  //Retrieve data stored in username field
+
+$pass = $_POST['password'];  //Retrieve data stored in password field
+$usertype = $_POST['usertype'];
+$guest_id = $_POST['guestid'];
+$query = "SELECT * FROM REGISTRATION WHERE username = '$user' and password = '$pass'";
+$result = mysqli_query($conn,$query) or die(mysqli_error($conn));;
+
+$count = mysqli_num_rows($result);
+echo $count;
+	if($count == 1) {
+
+	if($usertype == 'Guest'){
+		?>
 
 
 
+			<?php echo 'orange' ;
+			$SESSION['user'] = $_POST['username'];//Retrieves guest id for account deletion and booking addition and deletion
+			header('Location: guest.php');
+			?>
+			<?php
 
+		}else if($usertype == 'Manager'){
 
-
-<!-------------------------- Cancel a room menu options end here -->
-<script>
-$(document).ready(function(){
-  $('#checkAll').click(function(){
-    if(this.checked){
-      $('.checkbox').each(function(){
-        this.checked = true;
-      });
-    }else{
-      $('.checkbox').each(function() {
-        this.checked = false;
-      });
-    
-    }
-  });
-
-$('#delete').click(function(){
-  var dataArr = new Array();
-  if($('input:checkbox:checked').length > 0){
-    $('input:checkbox:checked').each(function(){
-      dataArr.push($(this).attr('id'));
-    });
-    console.log(dataArr);
-  }else{
-    alert('No records selected');
-  }
-
-});
-});
+			?>
+			<script type = "text/javascript">
+			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'manager.php');?>
 </script>
+			<?php
+		}
+}else{ echo "Wrong username and pass";
+}
+}
+
+
+
+
+
+
+?>
+
+
+
+
+	<title>Login Page</title>
+
+ 
+	<!--Bootsrap 4 CDN-->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+	<!--Custom styles-->
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>Sign In</h3>
+				<div class="d-flex justify-content-end social_icon">
+				
+			</div>
+			<div class="card-body">
+      <form method="post" action="test.php">
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+            <!----User name------>
+           
+						<input type="text" class="form-control" name='username' placeholder="username">
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+             <!----password------>
+						<input type="password" class="form-control" name='password' placeholder="password">
+					</div>
+          <div class="input-group">
+		Select user type: <select name ="usertype">
+			<option value= "Manager">Manager</option>
+			<option value= "Guest">Guest</option>
+		</select>
+	</div>
+
+					<div class="row align-items-center remember">
+						<input type="checkbox">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Login" name='login_btn' class="btn float-right login_btn">
+					</div>
+
+			
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					Don't have an account?<a href="#">Sign Up</a>
+				</div>
+				<div class="d-flex justify-content-center">
+					<a href="#">Forgot your password?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<style>
+
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body{
+background-image: url(img/guestbg.jpg);
+background-size: cover;
+background-repeat: no-repeat;
+height: 100%;
+font-family: 'Numans', sans-serif;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+.card{
+height: 370px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+
+.social_icon span{
+font-size: 60px;
+margin-left: 10px;
+color: #FFC312;
+}
+
+.social_icon span:hover{
+color: white;
+cursor: pointer;
+}
+
+.card-header h3{
+color: white;
+}
+
+.social_icon{
+position: absolute;
+right: 20px;
+top: -45px;
+}
+
+.input-group-prepend span{
+width: 50px;
+background-color: #FFC312;
+color: black;
+border:0 !important;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.remember{
+color: white;
+}
+
+.remember input
+{
+width: 20px;
+height: 20px;
+margin-left: 15px;
+margin-right: 5px;
+}
+
+.login_btn{
+color: black;
+background-color: #FFC312;
+width: 100px;
+}
+
+.login_btn:hover{
+color: black;
+background-color: white;
+}
+
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+
+</style>
 </body>
 </html>

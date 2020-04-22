@@ -48,7 +48,7 @@ $gid = $_SESSION['GID'];
 
 /*For Guest Background*/
 #header {
-     background: url(assets/img/hero/guestbg.jpg)no-repeat; 
+     background: url(img/vaca.jpg)no-repeat; 
      background-attachment: fixed;
      height: 100vh;
      background-size: 100%;

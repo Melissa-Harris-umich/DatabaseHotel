@@ -33,6 +33,9 @@ if(mysql_query($sql,$con )){
 }
 
 ?>
+
+
+
 <br />
 
 <h1>Hotel Database</h1>
