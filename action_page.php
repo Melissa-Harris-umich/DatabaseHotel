@@ -9,6 +9,8 @@ $_SESSION['GID'] = '3';
 $gid = $_SESSION['GID'];
 
 ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <?php
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
@@ -48,39 +50,39 @@ AND RID = ROOMID
   
    $aResult = mysqli_query($con,$availability) or die(mysqli_error($con));
    echo"Rooms Available"; 
+?>
+<div>
+   <table>
+   <tr>
+   <th> <input type='checkbox' id='checkAll'></th>
+    </tr>
+<?php
    
      while($row = mysqli_fetch_assoc($aResult)) {
        
-     
+        ?>
 
-      ?>
-      <form action="action_page.php" method="post" name="action">
-      <table>
+
+     
+     
+     
       <tr>
-      <td name='RoomID'><?php echo  $row['RoomID']; ?></td>
-      <td name='code'><?php echo  $row['code']; ?></td>
-      <td name='rtype'><?php echo  $row['cost']; ?></td>
+      <td><input class='checkbox ' type="checkbox"  id="<?php echo  $row['RoomID']; ?>" name="id[]"></td>
+      <td name="RoomId"><?php echo  $row['RoomID']; ?></td>
+      <td name ="code"><?php echo  $row['code']; ?></td>
+      <td ><?php echo  $row['cost']; ?></td>
       <td><?php echo  $row['rtype']; ?></td>
       <td><?php echo  $row['cap']; ?></td>
-      <td><input type="checkbox"  value='1'  id="<?php echo  $row['RoomID']; ?>" name="id[]"></td>
       </tr>
       </table>
       <?php
 }
 
-$_POST['RoomID']; 
-$_POST['code']; 
-$_POST['cost']; 
-$_POST['rtype']; 
-$_POST['cap']; 
-$_POST['checkin'];
-$_POST['checkout'];
-$_POST['num_guests'];
+
 
 ?>
-<button type="submit" name="addroom" class="btn btn-theme" >Book!</button>
-</form>
-     
+<button type="submit" name="addroom" id="addroom" class="btn btn-theme" >Book!</button>
+</div>
 
 
 
@@ -92,23 +94,10 @@ $_POST['num_guests'];
 
     if(isset($_POST['addroom'])){
 
-      $cin =  $_POST['checkin'];
-$cout = $_POST['checkout'];
-$guests =$_POST['num_guests'];
-$rm = $_POST['RoomID'];
-        print_r($id);
-        echo $_POST['id'];
-        echo $_POST['RoomID'];
-        echo $gid;
-        echo $_POST['checkin'];
-        echo $_POST['checkout'];
-        echo $_POST['num_guests'];
-        echo $_POST['code'];
+        echo "cats";
+        $rm =$_POST['RoomId'];
+
         echo $rm;
-
-
-
-       
 
         $query = "INSERT INTO BOOKING values (1,'$gid','$_POST[RoomID]',
        '$cin','$cout','$guests')";
@@ -123,6 +112,72 @@ $rm = $_POST['RoomID'];
 }
 
 ?>
+
+
+<!-- Javascript click functionality----->
+<script>
+$(document).ready(function(){
+  $('#checkAll').click(function(){
+    if(this.checked){
+      $('.checkbox').each(function(){
+        this.checked = true;
+      });
+    }else{
+      $('.checkbox').each(function() {
+        this.checked = false;
+      });
+    
+    }
+  });
+
+$('#addroom').click(function(){
+  var dataArr = new Array();
+  if($('input:checkbox:checked').length > 0){
+    $('input:checkbox:checked').each(function(){
+      dataArr.push($(this).attr('id'));
+      $(this).closest('tr').remove();    /////CHANGE REMOVE TO MAKE THIS GO TO QUERY FUNCTION AND INSERT INTO BOOKING FUNCTION
+    });
+    sendResponse(dataArr)
+  }else{
+    alert('No records selected');
+  }
+
+});
+});
+
+
+function sendResponse(dataArr){
+  $.ajax({
+    type : 'post',
+    url : 'action_page.php',
+    data : {'addroom' :dataArr},
+    success : function(response) {
+                alert(response);
+              },
+    error : function(errResponse){
+              alert(errResponse);
+    
+  }
+  });
+
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -157,6 +212,21 @@ if(mysqli_query($con,$sql )){
 
     }
 // Close connection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 $aResult = mysqli_query($con,"SELECT * FROM booking") or die(mysqli_error($con));
 

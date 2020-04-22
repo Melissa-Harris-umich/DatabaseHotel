@@ -4,7 +4,7 @@ if(isset($_SESSION['username']) && !empty($_SESSION['username'])) {
   echo 'Set and not empty, and no undefined index error!';
 }
 //works manually, id does not move from one page to other, may need new page
-$_SESSION['GID'] = '3';
+$_SESSION['GID'] = '1';
   echo $_SESSION['GID'];
 $gid = $_SESSION['GID'];
 
@@ -27,8 +27,7 @@ $gid = $_SESSION['GID'];
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   
-  <script
-  src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!---Our CSS Style------------->
 
