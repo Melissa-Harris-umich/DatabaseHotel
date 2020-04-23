@@ -16,7 +16,7 @@
 $servername = "localhost";
 $username ="root";
 $password = "usbw";
-$dbname = "hotel_db";
+$dbname = "421 project";
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 echo("connection");
 
@@ -33,13 +33,12 @@ $user = $_POST['username'];  //Retrieve data stored in username field
 
 $pass = $_POST['password'];  //Retrieve data stored in password field
 $usertype = $_POST['usertype'];
-$guest_id = $_POST['guestid'];
-$query = "SELECT * FROM REGISTRATION WHERE username = '$user' and password = '$pass'";
+$query = "SELECT * FROM REGISTRATION WHERE username = '$usertype' and password = '$pass'";
 $result = mysqli_query($conn,$query) or die(mysqli_error($conn));;
 
 $count = mysqli_num_rows($result);
-echo $count;
-	if($count == 1) {
+echo 'Count number is:'; echo $count;
+	if($result) {
 
 	if($usertype == 'Guest'){
 		?>
@@ -48,7 +47,7 @@ echo $count;
 
 			<?php echo 'orange' ;
 			$SESSION['user'] = $_POST['username'];//Retrieves guest id for account deletion and booking addition and deletion
-			header('Location: guest.php');
+			header('Location: http://' . $_SERVER['HTTP_HOST'] . '/DatabaseHotel/guest.php/');
 			?>
 			<?php
 
@@ -56,17 +55,17 @@ echo $count;
 
 			?>
 			<script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'manager.php');?>
+			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . '/DatabaseHotel/manager.php/');?>
 </script>
 			<?php
 		}
-}else{ 
+}else{
 	echo
 	"<script type=\"text/javascript\">".
 	"window.alert('Wrong username and password. Try again.');".
 	"top.location = 'index.php';".
-	"</script>"; 
-	exit; 
+	"</script>";
+	exit;
 
 }
 }
@@ -74,7 +73,7 @@ echo $count;
 	<title>Login Page</title>
 	<!--Bootsrap 4 CDN-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
+
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<!--Custom styles-->
@@ -92,7 +91,7 @@ echo $count;
 			<div class="card-header">
 				<h3>Sign In</h3>
 				<div class="d-flex justify-content-end social_icon">
-				
+
 			</div>
 			<div class="card-body">
       <form method="post" action="index.php">
@@ -101,9 +100,9 @@ echo $count;
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
 						</div>
             <!----User name------>
-           
+
 						<input type="text" class="form-control" name='username' placeholder="username">
-						
+
 					</div>
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
@@ -120,18 +119,18 @@ echo $count;
 		</select>
 	</div>
 
-				
+
 					<div class="form-group pt-2">
 						<input type="submit" value="Login" name='login_btn' class="btn float-right login_btn ">
 					</div>
 
-			
+
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
 					Don't have an account?<a href="register.php">Sign Up</a>
 				</div>
-			
+
 			</div>
 		</div>
 	</div>
