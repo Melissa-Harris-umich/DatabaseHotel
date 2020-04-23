@@ -68,6 +68,7 @@ if(mysql_query($sql,$con )){
 
   header('Location: index.php');
 } else{
+	echo
   "<script type=\"text/javascript\">".
   "window.alert('Unsuccessful Try again.');".
   "top.location = 'test.php';".
