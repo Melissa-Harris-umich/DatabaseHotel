@@ -315,18 +315,17 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
     foreach($_POST["language"] as $key => $values)  /* $key => Values allows for
     more than one value that has been checked to be stored.*/
     {
-          echo $values;
+
     }
    }
     if($values == "Update Hotel")
     {
-      echo 'Update Hotel firs if';
 
        if(!empty($_POST['Phone1']))
        {
 
         $Phone = $_POST['Phone1'];
-         $query = "UPDATE 421 project . hotel SET Phone_number = '$Phone'";
+         $query = "UPDATE hotel SET Phone_number = '$Phone'";
          if(mysqli_query($conn, $query)){
              echo "Records added successfully.";
          }
@@ -338,7 +337,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
        }else if(!empty($_POST['Managerfirst1']) )
        {
-         echo 'It works';
+
         $ManagerFn = $_POST['Managerfirst1'];
          $query1 = "UPDATE  hotel SET Manager_Fname = '$ManagerFn'";
          $result = mysqli_query($conn,$query1);
@@ -354,7 +353,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
        else if(!empty($_POST['ManagerLast1']))
        {
-            echo 'It works';
+
          $ManagerLn = $_POST['ManagerLast1'];
           $query2 = "UPDATE  hotel SET Manager_LName = '$ManagerLn'";
           $result = mysqli_query($conn,$query2);
@@ -384,7 +383,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
        }else  if(!empty($_POST['NumberofRooms1']) )
        {
-            echo 'It works';
+
          $NumberofRooms = $_POST['NumberofRooms1'];
          $query4 = "UPDATE  hotel SET Num_rooms = '$NumberofRooms'";
          if(mysqli_query($conn, $query4)){
@@ -397,7 +396,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
        } else if(!empty($_POST['Hotelcity1']) )
        {
-            echo 'It works';
+
          $HotelCity =  $_POST['Hotelcity1'];
          $query5 = "UPDATE  hotel SET City = '$HotelCity'";
          if(mysqli_query($conn, $query5)){
@@ -441,25 +440,25 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
     if($values == "DeleteRoom")
     {
-         echo 'delete first if';
+
 
           if(!empty($_POST['HID4']) && !empty($_POST['RoomID3']) )
           {
 
             $HID = $_POST['HID4'];
             $RoomID =  $_POST['RoomID3'];
-            $query6 = "DELETE FROM hotel WHERE  HotelID = '$HID'";
-            $query8 = "DELETE FROM room WHERE RoomID = '$RoomID'";
+            $query6 = "DELETE FROM ROOM WHERE HID = '$HID' AND RoomID = '$RoomID'";
 
 
-            if(mysqli_query($conn, $query6) && mysqli_query($conn, $query8)){
+
+            if(mysqli_query($conn, $query6)){
                 echo "Records Deleted successfully.";
 
             }
 
             else{
                 echo "ERROR: Could not able to execute query6: $query6.  " . mysqli_error($conn);
-                  echo "ERROR: Could not able to execute query6: $query8.  " . mysqli_error($conn);
+
 
 
 
@@ -470,13 +469,12 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
     if($values == "AddHotel")
     {
-         echo 'Add hotels works';
 
       if( empty($_POST['HotelID2']) && !empty($_POST['Phone2'])  && !empty($_POST['Managerfirst2']) && !empty($_POST['ManagerLast2']) && !empty($_POST['StarRating2']) && !empty($_POST['NumberEmployees2']) &&  !empty($_POST['NumberofRooms2'])  && !empty($_POST['Hotelcity2']) )
       {
 
 
-         echo 'Add hotel if statement works';
+
 
           $HotelID = $_POST['HotelID2'];
           $Phone = $_POST['Phone2'];
@@ -501,7 +499,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
     if($values == "DeleteHotels")
     {
-       echo 'First`if statment works';
+
 
 
         if(!empty($_POST['HotelID3']))
@@ -530,7 +528,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
 
     if($values == "AddRoomType")
     {
-        echo 'Add Room type first if works';
+
 
       if(!empty($_POST['Roomcode']) && !empty($_POST['Roomtype']) && !empty($_POST['Capacity']) && !empty($_POST['Capacity']))
        {
@@ -558,7 +556,7 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
       if(!empty($_POST['HotelID4']))
       {
       $HotelID = $_POST['HotelID4'];
-      $query13 = "SELECT HID, SUM( Cost ) FROM ROOM, ROOM_TYPE, HOTEL WHERE Availability = TRUE AND HOTEL.HotelID AND ROOM.HID = $HotelID AND ROOM.RCode = ROOM_TYPE.Code GROUP BY HotelID";
+      $query13 = "SELECT HID, SUM( Cost ) AS Cost FROM ROOM, ROOM_TYPE, HOTEL WHERE Availability = TRUE AND HOTEL.HotelID AND ROOM.HID = $HotelID AND ROOM.RCode = ROOM_TYPE.Code GROUP BY HotelID";
 
       $result = mysqli_query($conn,$query13);
 
@@ -566,7 +564,8 @@ if(isset($_POST["submit"]))  //if user clicks the submit button
     // output data of each row
     while($row = mysqli_fetch_assoc($result))
     {
-       echo  $row['Cost'];
+       echo 'Total cost of rooms:'; echo '$'; echo $row['Cost'];
+       break;
 
       }
     }
