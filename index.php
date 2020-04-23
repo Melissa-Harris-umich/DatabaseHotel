@@ -60,7 +60,14 @@ echo $count;
 </script>
 			<?php
 		}
-}else{ echo "Wrong username and pass";
+}else{ 
+	echo
+	"<script type=\"text/javascript\">".
+	"window.alert('Wrong username and password. Try again.');".
+	"top.location = 'index.php';".
+	"</script>"; 
+	exit; 
+
 }
 }
 ?>
