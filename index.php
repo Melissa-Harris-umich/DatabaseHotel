@@ -63,40 +63,32 @@ echo $count;
 }else{ echo "Wrong username and pass";
 }
 }
-
-
-
-
-
-
 ?>
-
-
-
-
 	<title>Login Page</title>
-
- 
 	<!--Bootsrap 4 CDN-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
 	<!--Custom styles-->
-	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
+
+
+<div class="center">
+  <h1>Hotel Database</h1>
 <body>
 <div class="container">
 	<div class="d-flex justify-content-center h-100">
-		<div class="card">
+		<div class="card mt-5">
 			<div class="card-header">
 				<h3>Sign In</h3>
 				<div class="d-flex justify-content-end social_icon">
 				
 			</div>
 			<div class="card-body">
-      <form method="post" action="test.php">
+      <form method="post" action="index.php">
 					<div class="input-group form-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -113,29 +105,26 @@ echo $count;
              <!----password------>
 						<input type="password" class="form-control" name='password' placeholder="password">
 					</div>
-          <div class="input-group">
-		Select user type: <select name ="usertype">
+					<div class="align-items-right remember pl-7 ">
+
+		 Select user type: <select name ="usertype"> </div>
 			<option value= "Manager">Manager</option>
 			<option value= "Guest">Guest</option>
 		</select>
 	</div>
 
-					<div class="row align-items-center remember">
-						<input type="checkbox">Remember Me
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Login" name='login_btn' class="btn float-right login_btn">
+				
+					<div class="form-group pt-2">
+						<input type="submit" value="Login" name='login_btn' class="btn float-right login_btn ">
 					</div>
 
 			
 			</div>
 			<div class="card-footer">
 				<div class="d-flex justify-content-center links">
-					Don't have an account?<a href="#">Sign Up</a>
+					Don't have an account?<a href="register.php">Sign Up</a>
 				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
-				</div>
+			
 			</div>
 		</div>
 	</div>
@@ -172,7 +161,7 @@ background-color: rgba(0,0,0,0.5) !important;
 .social_icon span{
 font-size: 60px;
 margin-left: 10px;
-color: #FFC312;
+color: #dab31e;;
 }
 
 .social_icon span:hover{
@@ -192,7 +181,7 @@ top: -45px;
 
 .input-group-prepend span{
 width: 50px;
-background-color: #FFC312;
+background-color: #dab31e;;
 color: black;
 border:0 !important;
 }
@@ -217,7 +206,7 @@ margin-right: 5px;
 
 .login_btn{
 color: black;
-background-color: #FFC312;
+background-color: #dab31e;;
 width: 100px;
 }
 

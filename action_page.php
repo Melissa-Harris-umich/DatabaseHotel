@@ -52,7 +52,7 @@ AND RID = ROOMID
    echo"Rooms Available"; 
 ?>
 <div>
-   <table>
+<form action="action_page.php" method="post" name="action">
    <tr>
    <th> <input type='checkbox' id='checkAll'></th>
     </tr>
@@ -75,13 +75,18 @@ AND RID = ROOMID
       <td><?php echo  $row['cap']; ?></td>
       </tr>
       </table>
+
+   
+
       <?php
 }
+$Rmid= $row['id'];
 
 
 
 ?>
 <button type="submit" name="addroom" id="addroom" class="btn btn-theme" >Book!</button>
+</form>
 </div>
 
 
@@ -95,9 +100,19 @@ AND RID = ROOMID
     if(isset($_POST['addroom'])){
 
         echo "cats";
-        $rm =$_POST['RoomId'];
+        $rm = $_POST['id'];
+        $rmm = $_POST['RoomID'];
+
+        if (is_array($rm))
+{
+  foreach ( $id as $key => $value ) 
+  {
+      print( $value );
+  }
+}
 
         echo $rm;
+        echo $rmm;
 
         $query = "INSERT INTO BOOKING values (1,'$gid','$_POST[RoomID]',
        '$cin','$cout','$guests')";
@@ -114,54 +129,7 @@ AND RID = ROOMID
 ?>
 
 
-<!-- Javascript click functionality----->
-<script>
-$(document).ready(function(){
-  $('#checkAll').click(function(){
-    if(this.checked){
-      $('.checkbox').each(function(){
-        this.checked = true;
-      });
-    }else{
-      $('.checkbox').each(function() {
-        this.checked = false;
-      });
-    
-    }
-  });
 
-$('#addroom').click(function(){
-  var dataArr = new Array();
-  if($('input:checkbox:checked').length > 0){
-    $('input:checkbox:checked').each(function(){
-      dataArr.push($(this).attr('id'));
-      $(this).closest('tr').remove();    /////CHANGE REMOVE TO MAKE THIS GO TO QUERY FUNCTION AND INSERT INTO BOOKING FUNCTION
-    });
-    sendResponse(dataArr)
-  }else{
-    alert('No records selected');
-  }
-
-});
-});
-
-
-function sendResponse(dataArr){
-  $.ajax({
-    type : 'post',
-    url : 'action_page.php',
-    data : {'addroom' :dataArr},
-    success : function(response) {
-                alert(response);
-              },
-    error : function(errResponse){
-              alert(errResponse);
-    
-  }
-  });
-
-}
-</script>
 
 
 

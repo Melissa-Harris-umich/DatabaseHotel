@@ -1,239 +1,380 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<!DOCTYPE html>
-
-<head>
-
-<title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
-</head>
-<?php
-
-
-$servername = "localhost";
-$username ="root";
-$password = "usbw";
-$dbname = "hotel_db";
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-echo("connection");
-
-
-
- if(isset($_POST['login_btn'])) //If user clicks login button
-
-{
-
-
-	//Validates user that is logging in
-
-$user = $_POST['username'];  //Retrieve data stored in username field
-
-$pass = $_POST['password'];  //Retrieve data stored in password field
-$usertype = $_POST['usertype'];
-$guest_id = $_POST['guestid'];
-$query = "SELECT * FROM REGISTRATION WHERE username = '$user' and password = '$pass'";
-$result = mysqli_query($conn,$query) or die(mysqli_error($conn));;
-
-$count = mysqli_num_rows($result);
-echo $count;
-	if($count == 1) {
-
-	if($usertype == 'Guest'){
-		?>
-
-
-
-			<?php echo 'orange' ;
-			$SESSION['user'] = $_POST['username'];//Retrieves guest id for account deletion and booking addition and deletion
-			header('Location: guest.php');
-			?>
-			<?php
-
-		}else if($usertype == 'Manager'){
-
-			?>
-			<script type = "text/javascript">
-			<?php header('Location: http://' . $_SERVER['HTTP_HOST'] . 'manager.php');?>
-</script>
-			<?php
-		}
-}else{ echo "Wrong username and pass";
+<?php 
+session_start();
+if(isset($_SESSION['username']) && !empty($_SESSION['username'])) {
+  echo 'Set and not empty, and no undefined index error!';
 }
-}
+//works manually, id does not move from one page to other, may need new page
+$_SESSION['GID'] = '1';
+  echo $_SESSION['GID'];
+$gid = $_SESSION['GID'];
+
+?>
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   
+    <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+   <link rel="stylesheet" type="text/css" href="/github/databasehotel/style.css">
+  
+    <title>Guest Page</title>
+  </head>
 
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!---Our CSS Style------------->
 
 
+      <!-----PHP CONNECTING---->
+  <?php 
+
+   $con = mysqli_connect('localhost', 'root','usbw','hotel_db') or die(mysqli_error($con));
 
 
 ?>
-
-
-
-
-	<title>Login Page</title>
-
- 
-	<!--Bootsrap 4 CDN-->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
-    <!--Fontawesome CDN-->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-	<!--Custom styles-->
-	<link rel="stylesheet" type="text/css" href="styles.css">
-</head>
 <body>
-<div class="container">
-	<div class="d-flex justify-content-center h-100">
-		<div class="card">
-			<div class="card-header">
-				<h3>Sign In</h3>
-				<div class="d-flex justify-content-end social_icon">
-				
-			</div>
-			<div class="card-body">
-      <form method="post" action="test.php">
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-user"></i></span>
-						</div>
-            <!----User name------>
-           
-						<input type="text" class="form-control" name='username' placeholder="username">
-						
-					</div>
-					<div class="input-group form-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="fas fa-key"></i></span>
-						</div>
-             <!----password------>
-						<input type="password" class="form-control" name='password' placeholder="password">
-					</div>
-          <div class="input-group">
-		Select user type: <select name ="usertype">
-			<option value= "Manager">Manager</option>
-			<option value= "Guest">Guest</option>
-		</select>
-	</div>
-
-					<div class="row align-items-center remember">
-						<input type="checkbox">Remember Me
-					</div>
-					<div class="form-group">
-						<input type="submit" value="Login" name='login_btn' class="btn float-right login_btn">
-					</div>
-
-			
-			</div>
-			<div class="card-footer">
-				<div class="d-flex justify-content-center links">
-					Don't have an account?<a href="#">Sign Up</a>
-				</div>
-				<div class="d-flex justify-content-center">
-					<a href="#">Forgot your password?</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
 
 
 <style>
 
 
-@import url('https://fonts.googleapis.com/css?family=Numans');
+/*For Guest Background*/
+#header {
+     background: url(img/vaca.jpg)no-repeat; 
+     background-attachment: fixed;
+     height: 100vh;
+     background-size: 100%;
 
-html,body{
-background-image: url(img/guestbg.jpg);
-background-size: cover;
-background-repeat: no-repeat;
-height: 100%;
-font-family: 'Numans', sans-serif;
-}
-
-.container{
-height: 100%;
-align-content: center;
-}
-
-.card{
-height: 370px;
-margin-top: auto;
-margin-bottom: auto;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
-}
-
-.social_icon span{
-font-size: 60px;
-margin-left: 10px;
-color: #FFC312;
-}
-
-.social_icon span:hover{
-color: white;
-cursor: pointer;
-}
-
-.card-header h3{
-color: white;
-}
-
-.social_icon{
-position: absolute;
-right: 20px;
-top: -45px;
-}
-
-.input-group-prepend span{
-width: 50px;
-background-color: #FFC312;
-color: black;
-border:0 !important;
-}
-
-input:focus{
-outline: 0 0 0 0  !important;
-box-shadow: 0 0 0 0 !important;
 
 }
-
-.remember{
-color: white;
+label{
+  color:white;
+ 
+}
+#myDIV {
+  width: 100%;
+  padding: 5px 0;
+  text-align: center;
+  margin-top: 5px;
+  display: none;
 }
 
-.remember input
-{
-width: 20px;
-height: 20px;
-margin-left: 15px;
-margin-right: 5px;
+#Del {
+ 
+  padding: 55px 0;
+  text-align: center;
+  margin-top: 5px;
+  display: none;
+  align-content:center;
 }
 
-.login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
+#Can {
+ 
+  text-align: center;
+  margin-top: 5px;
+  display: none;
+  align-content:center;
 }
 
-.login_btn:hover{
-color: black;
-background-color: white;
-}
+.btn-theme {
+  background-color:#dab31e;
 
-.links{
-color: white;
 }
+  h3 {
+    color: #dab31e;
+  }
 
-.links a{
-margin-left: 4px;
-}
 
 </style>
+<header>
+<!--Top Navigation bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+          <a class="navbar-brand" href="#">HOTEL</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#title">About Us</a>
+                </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+
+            </ul>
+          </div>
+        </nav>
+<!-- Top Navigation Cod Ends Here -->
+</header>
+
+            <!-- id in section given header for meaning, to make more meaningful -->
+    <section id="header" class="jumbotron text-center mb-0">
+      <div class="center">
+
+
+    <h1>Choose an Option</h1>
+
+
+
+<!-----<form action='/github/databasehotel/guest.php' method="post">
+Button Options -->
+ <button type="button" id= "Book"  class="btn btn-dark" onclick="myFunction(this.id)" >Book a room</button>
+ <button type="button" id="Cancel" class="btn btn-dark" onclick="myFunction(this.id)">Cancel your reservation</button>
+ <button type="button" id="Delete" class="btn btn-danger" onclick="myFunction(this.id)">Delete your account</button>
+
+
+ <!---------------------------------Book a room menu functions  -->
+ <div id="myDIV" display="none">
+<form action="action_page.php" method="post" name="action">
+
+ 
+ <label for="num_guests">Number of guests: </label>
+<select id="num_guests" name="num_guests">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+</select>
+<label for="checkin">Check in date:</label>
+<input type ="date" id="cin" name="checkin">
+<label for="checkout">Check out date:</label>
+<input type ="date" id="cout" name="checkout">
+
+<input type="submit" name="bkbtn" id="bkbtn" class="btn btn-theme" >
+
+</form>
+</div>
+
+<div id="show"></div>
+
+<!-- //Test 4/16/2020 Noy being used below --> 
+<script>
+$(document).ready(function() {
+$('#bkbtn').click(function(){
+  var checkin =$('#cin').val();
+  var checkout =$('#cout').val();
+    setInterval(function() {
+        $('#show').load('action_page.php')
+    }, 3000);
+  });
+ 
+    });
+
+    function sendResponse(){
+  $.ajax({
+    type : 'post',
+    url : 'action_page.php',
+    data : { 'data1':cin,
+            'data2': cout },
+    success : function(response) {
+                alert(response);
+              },
+    error : function(errResponse){
+              alert(errResponse);
+    
+  }
+  });
+
+}
+
+</script>
+<!-------------------------- Book a room menu options end here -->
+
+
+<!------------------------- Cancel Option delete from table here -->
+<div id="Can" display="none">
+  <label for="Can">Please choose reservation to cancel:</label>
+
+  <?php
+//Get table data
+$reservations = "SELECT * FROM booking where GID = '$gid'   ";//gid needs to be replaced by session but issue
+$result =mysqli_query($con,$reservations);
+?>
+<div>
+<!-- <form action="guest.php" method="post" > -->
+  <table class="table table-sm table-dark" id="Guest_Table">
+
+    <tr>	
+    <thead><h3>Your Reservations</h3></th>
+    </tr>
+    <th> <input type='checkbox' id='checkAll'></th>
+    <th scope="col">Hotel</th>
+    <th scope="col">Guest ID</th>	
+    <th scope="col">Room ID</th>	
+    <th scope="col">Check in Date:</th>
+    <th scope="col">Check out Date:</th>
+    <th scope="col">Number of occupants</th>
+  
+    </tr>	
+</thead>
+<tbody>
+    <tr>	
+    <?php	
+  
+     //Table data taken from assigned variables, displays guest data in Front-end table  
+     while($row = mysqli_fetch_assoc($result)) 
+     {
+       ?>
+  <td><input class='checkbox ' type="checkbox"  id="<?php echo  $row['Start_date']; ?>" name="id[]"></td>
+     <td><?php echo  $row['HID']; ?></td>
+     <td><?php echo  $row['GID']; ?></td>
+     <td><?php echo  $row['RID']; ?></td>
+     <td><?php echo  $row['Start_date']; ?></td>
+     <td><?php echo  $row['End_date']; ?></td>
+     <td><?php echo  $row['Num_occupance']; ?></td>
+     
+     </tr>
+         
+
+    
+    
+         <?php
+        }
+       
+?>
+         </tbody>
+
+     <button type="button" class="btn btn-theme" id="can_res">Delete</button>
+            
+     
+     </table>
+     </div>
+    
+
+
+
+    </form>
+ </div>
+<!-------------------------- Cancel a room menu options end here -->
+<script>
+$(document).ready(function(){
+  $('#checkAll').click(function(){
+    if(this.checked){
+      $('.checkbox').each(function(){
+        this.checked = true;
+      });
+    }else{
+      $('.checkbox').each(function() {
+        this.checked = false;
+      });
+    
+    }
+  });
+
+$('#can_res').click(function(){
+  var dataArr = new Array();
+  if($('input:checkbox:checked').length > 0){
+    $('input:checkbox:checked').each(function(){
+      dataArr.push($(this).attr('id'));
+      $(this).closest('tr').remove();
+    });
+    sendResponse(dataArr)
+  }else{
+    alert('No records selected');
+  }
+
+});
+});
+
+
+function sendResponse(dataArr){
+  $.ajax({
+    type : 'post',
+    url : 'action_page.php',
+    data : {'data' :dataArr},
+    success : function(response) {
+                alert(response);
+              },
+    error : function(errResponse){
+              alert(errResponse);
+    
+  }
+  });
+
+}
+</script>
+<!--------------------------------DELETE ACCOUNT------------------------------->
+<form action = "guest.php" method = "post">
+<div id="Del" display="none">
+<h3>Are you sure you want to delete your account?</h3>
+<?php
+//Get table data
+
+if(isset($_POST['delbtn'])){
+  echo "Delete button pressed";
+$Delete_user = "DELETE FROM REGISTRATION where GuestId = '$gid'   ";//gid needs to be replaced by session but issue
+$result2 =mysqli_query($con,$Delete_user);
+
+if($result2) {
+  header('Location: index.php');
+  echo "Records Deleted successfully.";
+
+}else{
+echo "Did not delete"; 
+  }  
+}
+?>
+
+ <button type="submit" class="btn btn-theme" name='delbtn'>Confirm</button>
+</div>
+</form>
+<!--------------------------------DELETE ACCOUNT------------------------------->
+
+
+<!-- Javascript -->
+<script>
+// Function for toggling menu after button click here
+function myFunction(id) {
+  var can = document.getElementById("Can");
+  var b = document.getElementById("myDIV");
+  var del = document.getElementById("Del");
+  
+  if(id =="Book") {
+    var x = document.getElementById("myDIV");
+    del.style.display = "none";
+    can.style.display = "none";
+
+  }
+  
+  if(id =="Cancel") {
+  var x = document.getElementById("Can");
+  del.style.display = "none";
+  b.style.display = "none";
+  }
+
+  if(id =="Delete") {
+  var x = document.getElementById("Del");
+  can.style.display = "none";
+  b.style.display = "none";
+  }
+
+  if (x.style.display === "block") {
+    x.style.display = "none";
+  } else {
+    x.style.display = "block";
+  }
+
+  
+
+}
+
+<?php
+mysqli_close($con);
+?>
+</script>
+
 </body>
 </html>
